@@ -2,7 +2,7 @@ language: java
 services:
   - docker
 
-script: mvn clean test -P test-consumer,test-business
+script: mvn clean install -P test-consumer,test-business
 
 notifications:
   email:
