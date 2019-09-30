@@ -38,3 +38,7 @@ Il comporte :
     docker-compose stop
     docker-compose rm -v
     docker-compose up
+
+
+## Travis CI
+Le fichier de configuration `.travis.yml` de l'environnement d'intégration continue Travis CI.
