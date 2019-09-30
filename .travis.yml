@@ -2,6 +2,7 @@ language: java
 services:
   - docker
 
+before_script: cd src
 script: mvn clean install 
 
 notifications:
