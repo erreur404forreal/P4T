@@ -2,12 +2,22 @@ language: java
 services:
   - docker
 
-before_script: cd src
-script: mvn clean install 
+before_install:
+    - cd docker/dev
+    - docker-compose up -d
+    - cd ../..
 
+script: 
+    - mvn clean install -P test-business,test-consumer
+    
+after_script:
+    - cd docker/dev
+    - docker-compose stop
+    - docker-compose rm -v -f
+    
 notifications:
   email:
     recipients:
       - ceremej@gmail.com
-    on_success: never # default: change
-    on_failure: always # default: always
+    on_success: always 
+    on_failure: always 

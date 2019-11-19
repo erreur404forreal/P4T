@@ -84,12 +84,12 @@
             </properties>
         </profile>
 
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
+        <!-- Profile utilisé pour les tests d'intégration de la couche Business -->
         <profile>
             <id>test-business</id>
         </profile>
 
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
+        <!-- Profile utilisé pour les tests d'intégration de la couche Consumer -->
         <profile>
             <id>test-consumer</id>
         </profile>
