@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -55,43 +56,56 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
-        // Bien se réferer à la JavaDoc de cette méthode !
-        /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                    (table sequence_ecriture_comptable)
-        */
-
-
-        /*
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        1. Utiliser le numéro 1.
-                    * Sinon :
-                        1. Utiliser la dernière valeur + 1
-        */
-
-
-
-        /*
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-        */
-
-
-        /*
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
-         */
-
-
+    public EcritureComptable getEcritureComptable(Integer pId) throws NotFoundException {
+        return getDaoProxy().getComptabiliteDao().getEcritureComptable(pId);
     }
 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    @Override
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws FunctionalException, NotFoundException {
+        // Bien se réferer à la JavaDoc de cette méthode !
+        /* Le principe :
+                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
+                    (table sequence_ecriture_comptable)
+        */
+        Integer vEcritureComptableYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()));
+        SequenceEcritureComptable vRechercheSequence = new SequenceEcritureComptable();
+        vRechercheSequence.setJournalCode(pEcritureComptable.getJournal().getCode());
+        vRechercheSequence.setAnnee(vEcritureComptableYear);
+        SequenceEcritureComptable vExistingSequence = getDaoProxy().getComptabiliteDao().getSequenceByCodeAndAnneeCourante(vRechercheSequence);
+        /*        2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+                        1. Utiliser le numéro 1.
+                    * Sinon :
+                        1. Utiliser la dernière valeur + 1
+        */
+        Integer vNumeroSequence;
+        if (vExistingSequence == null) vNumeroSequence = 1;
+        else vNumeroSequence = vExistingSequence.getDerniereValeur() + 1;
+        /*
+                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
+        */
+        String vReference = pEcritureComptable.getJournal().getCode() +
+                "-" + vEcritureComptableYear +
+                "/" + String.format("%05d", vNumeroSequence);
+        pEcritureComptable.setReference(vReference);
+        this.updateEcritureComptable(pEcritureComptable);
+        /*
+                4.  Enregistrer (insert/update) la valeur de la séquence en persistance
+                    (table sequence_ecriture_comptable)
+        */
+        SequenceEcritureComptable vNewSequence = new SequenceEcritureComptable();
+        vNewSequence.setJournalCode(pEcritureComptable.getJournal().getCode());
+        vNewSequence.setAnnee(vEcritureComptableYear);
+        vNewSequence.setDerniereValeur(vNumeroSequence);
+        this.upsertSequenceEcritureComptable(vNewSequence);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -101,12 +115,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion unitaires,
-     * c'est à dire indépendemment du contexte (unicité de la référence, exercie comptable non cloturé...)
+     * c'est à dire indépendemment du contexte (unicité de la référence, exercice comptable non cloturé...)
      *
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO tests à compléter
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
@@ -144,8 +157,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        String vDate = new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate());
+        if (!pEcritureComptable.getReference().substring(3, 7).equals(vDate))
+            throw new FunctionalException(
+                    "L'année dans la référence doit correspondre à la date de l'écriture comptable.");
+        if (!pEcritureComptable.getReference().substring(0, 2).equals(pEcritureComptable.getJournal().getCode()))
+            throw new FunctionalException(
+                    "Le code journal dans la référence doit correspondre au code du journal en question.");
     }
 
 
@@ -160,15 +179,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
-                // Recherche d'une écriture ayant la même référence
                 EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
                     pEcritureComptable.getReference());
 
-                // Si l'écriture à vérifier est une nouvelle écriture (id == null),
-                // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
-                // c'est qu'il y a déjà une autre écriture avec la même référence
-
-                /*compareTo au lieu de equals*/
+                // S'il s'agit d'une nouvelle écriture, où alors si l'écriture remontée correspond à celle à vérifier...
                 if (pEcritureComptable.getId() == null
                     || !pEcritureComptable.getId().equals(vECRef.getId())) {
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
@@ -200,7 +214,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     @Override
     public void updateEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
-        //L'écriture comptable testée avant d'être mise à jour
         this.checkEcritureComptable(pEcritureComptable);
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
@@ -220,6 +233,21 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
             getDaoProxy().getComptabiliteDao().deleteEcritureComptable(pId);
+            getTransactionManager().commitMyERP(vTS);
+            vTS = null;
+        } finally {
+            getTransactionManager().rollbackMyERP(vTS);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void upsertSequenceEcritureComptable(SequenceEcritureComptable pSequence) {
+        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        try {
+            getDaoProxy().getComptabiliteDao().upsertSequenceEcritureComptable(pSequence);
             getTransactionManager().commitMyERP(vTS);
             vTS = null;
         } finally {
