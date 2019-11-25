@@ -7,7 +7,7 @@ before_install:
     - cd docker/dev
     - docker-compose up -d
     - docker exec -it postgres psql -U postgres
-    -\c <dev_myerp.db_1>
+    - \c <dev_myerp.db_1>
     - cd ../..
     
 #before_script: cd src

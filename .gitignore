@@ -1,5 +1,13 @@
-# IDE
-*.iml
+/target
+/*-*/target
 
-# Docker
-docker/dev/data/
+/.settings
+/.project
+/*-*/.project
+/*-*/.settings
+/*-*/.classpath
+/*-*/.checkstyle
+/*-*/.springBeans
+
+/.idea
+*.iml
