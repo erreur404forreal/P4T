@@ -44,7 +44,7 @@ Il comporte :
 ## Travis CI
 Le fichier de configuration `.travis.yml` de l'environnement d'intégration continue Travis CI.
 
-##Erreurs
+### Erreurs
 La mise en place des tests unitaires et d’intégration a permis de mettre en évidence plusieurs erreurs dans le code :
 -	Classe `EcritureComptable` :`getTotalCredit()` appel vEcritureComptable.getDebit() au lieu de vEcritureComptable.getCredit().
 -	Classe `EcritureComptable` :  `equals` remplace `compareTo()` .
