@@ -43,10 +43,12 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setDate(new Date());
     }
     
-// ==================== Test de la méthode getSoldeCompteComptable ====================
+// ====================  getSoldeCompteComptable ====================
     
-    // RG_Compta_1 : teste que la solde calculé soit exact et que le solde soit bien débiteur 
-    // dans le cas où plusieurs lignes d'écriture existent pour ce compte 
+    /*
+     RG_Compta_1 : solde exact et débiteur 
+     quand plusieurs lignes d'écriture existent pour ce compte*/
+ 
     
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithLigneEcriture_returnCompteDebiteur() {
@@ -57,8 +59,9 @@ public class ComptabiliteManagerImplTest {
     	assertEquals("Solde débiteur", compteActual.getLibelle());
     	
     }
-    // RG_Compta_1 : teste que la solde calculé soit exact et que le solde soit bien créditeur 
-    // dans le cas où plusieurs lignes d'écriture existent pour ce compte 
+    /*
+    RG_Compta_1 : solde exact et créditeur 
+    quand plusieurs lignes d'écriture existent pour ce compte*/
     
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithLigneEcriture_returnCompteCrediteur() {
@@ -70,7 +73,9 @@ public class ComptabiliteManagerImplTest {
     	
     }
     
-    // RG_Compta_1 : teste que la solde est nul dans le cas où aucune ligne associée au compteComptable
+    /*
+     RG_Compta_1 : solde est nul quand aucune ligne associée au compteComptable */
+ 
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithNoLigneEcriture_returnSoldeNul() {
     	CompteComptable compte = new CompteComptable(805, "Compte fictif");
@@ -80,7 +85,7 @@ public class ComptabiliteManagerImplTest {
     	assertEquals("Solde nul",compteActual.getLibelle());
     }
     
-// ==================== Test de la méthode AddReference ====================
+// ==================== AddReference ====================
     //RG_Compta_5 : teste l'ajout de la référence quand c'est le 1er enregistrement de l'annee concernée
     @Test
     public synchronized void addReferenceTest_whenNoSequenceExistsYet() {

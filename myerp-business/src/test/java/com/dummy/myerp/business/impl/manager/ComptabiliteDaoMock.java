@@ -16,7 +16,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 /**
- * Classe permettant de mocker l'appel à la couche consumer
+ * Mock de l'appel à la couche consumer
  *
  */
 public class ComptabiliteDaoMock implements ComptabiliteDao{
