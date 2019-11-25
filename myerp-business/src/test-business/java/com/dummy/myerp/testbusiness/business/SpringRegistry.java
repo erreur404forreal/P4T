@@ -41,6 +41,8 @@ public final class SpringRegistry {
         this.contextAppli = new ClassPathXmlApplicationContext(SpringRegistry.CONTEXT_APPLI_LOCATION);
         SpringRegistry.LOGGER.debug("[FIN] SpringRegistry() - Initialisation du contexte Spring");
     }
+    
+    
 
     /**
      * Renvoie l'instance unique de la classe (design pattern Singleton).
