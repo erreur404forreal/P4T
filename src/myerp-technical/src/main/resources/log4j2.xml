@@ -6,8 +6,17 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="WARN">
+        <Root level="ERROR">
             <AppenderRef ref="console"/>
         </Root>
+        
+		<!-- Affiche les requêtes SQL de JdbcTemplate -->
+        <Logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/> 
+        <!-- Mettre level="DEBUG" pour afficher les requêtes -->
+        
+        <!-- Affiche les paramètres rentrés dans les requêtes SQL -->
+        <Logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="TRACE"/>
+		<!-- Mettre level="TRACE" pour afficher les paramètres -->
+       
     </Loggers>
 </Configuration>

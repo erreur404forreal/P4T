@@ -5,6 +5,8 @@ import java.util.List;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -25,7 +27,38 @@ public interface ComptabiliteDao {
      * @return {@link List}
      */
     List<JournalComptable> getListJournalComptable();
+    
+    /**
+     * Renvoie le Journal Comptable {@code pCode}.
+     *
+     * @param pCode Code du journal Comptable
+     * @return {@link JournalComptable}
+     * @throws NotFoundException : Si le JournalComptable n'est pas trouvé
+     */
+    JournalComptable getJournalComptableByCode(String pCode) throws NotFoundException;
 
+    // ==================== SequenceEcritureComptable ====================
+    /**
+     * Renvoie l'Écriture Comptable d'id {@code pId}.
+     *
+     * @param pId l'id de l'écriture comptable
+     * @return {@link EcritureComptable}
+     * @throws NotFoundException : Si l'écriture comptable n'est pas trouvée
+     */
+    public SequenceEcritureComptable getLastSequenceByCodeAndYear(String pCode, Integer pAnnee) throws NotFoundException ;
+    /**
+     * Insert une nouvelle séquence d'écriture comptable.
+     *
+     */
+    public void insertSequenceEcritureComptable(String pJournalCode, Integer pAnnee, Integer pDerniereValeur) ;
+    /**
+     * Met à jour la sequence d'écriture comptable.
+     *
+     * @param pJournalCode -
+     * @param pAnnee -
+     * @param pDerniereValeur -
+     */
+    public void updateSequenceEcritureComptable(String pJournalCode, Integer pAnnee, Integer pDerniereValeur) ;
 
     // ==================== EcritureComptable ====================
 
@@ -80,4 +113,12 @@ public interface ComptabiliteDao {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
+    
+    /**
+     * Renvoie la liste des lignes d'écritures Comptables pour un compte comptable
+     * @param pNumero le numéro du compte comptable
+     * @return {@link List}
+     */
+    public List<LigneEcritureComptable> getListLigneEcritureComptable(Integer pNumero);
+
 }

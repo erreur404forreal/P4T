@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -24,12 +26,13 @@ public class EcritureComptable {
     /** Journal comptable */
     @NotNull private JournalComptable journal;
     /** The Reference. */
-    @Pattern(regexp = "\\d{1,5}-\\d{4}/\\d{5}")
+    @Pattern(regexp = "[A-Z]{2}-\\d{4}/\\d{5}")
     private String reference;
     /** The Date. */
     @NotNull private Date date;
 
     /** The Libelle. */
+    
     @NotNull
     @Size(min = 1, max = 200)
     private String libelle;
@@ -80,7 +83,7 @@ public class EcritureComptable {
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      */
-    // TODO à tester
+    // TODO à tester  ==> FAIT
     public BigDecimal getTotalDebit() {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
@@ -96,12 +99,10 @@ public class EcritureComptable {
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au crédit
      */
-
-    //On fait un test sur le débit au lieu du crédit
     public BigDecimal getTotalCredit() {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
-            if (vLigneEcritureComptable.getCredit() != null) {
+            if (vLigneEcritureComptable.getCredit() != null) { //ERREUR dans cette ligne corrigée
                 vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
             }
         }
@@ -112,9 +113,10 @@ public class EcritureComptable {
      * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
      * @return boolean
      */
-    //equals remplacé par compareTo
     public boolean isEquilibree() {
-    	boolean vRetour = this.getTotalDebit().compareTo(getTotalCredit()) == 0;
+    	
+    	//Equals remplacé par compareTo --> 2 valeurs peuvent être égales même si arrondi different
+        boolean vRetour = this.getTotalDebit().compareTo(this.getTotalCredit()) == 0;
         return vRetour;
     }
 
@@ -135,5 +137,22 @@ public class EcritureComptable {
             .append(StringUtils.join(listLigneEcriture, "\n")).append("\n]")
             .append("}");
         return vStB.toString();
+    }
+    /**
+     * Renvoie le {@link EcritureComptable} de référence  si elle est présente dans la liste
+     *
+     * @param pList la liste où chercher le {@link EcritureComptable}
+     * @param pNumero le référence de {@link EcritureComptable} à chercher
+     * @return {@link CompteComptable} ou {@code null}
+     */
+    public static EcritureComptable getInListByReference(List<? extends EcritureComptable> pList, String pReference) {
+        EcritureComptable vRetour = null;
+        for (EcritureComptable vBean : pList) {
+            if (vBean != null && Objects.equals(vBean.getReference(), pReference)) {
+                vRetour = vBean;
+                break;
+            }
+        }
+        return vRetour;
     }
 }
