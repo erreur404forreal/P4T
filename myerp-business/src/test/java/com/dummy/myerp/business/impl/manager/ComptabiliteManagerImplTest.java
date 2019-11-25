@@ -57,7 +57,6 @@ public class ComptabiliteManagerImplTest {
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertTrue(new BigDecimal("2947.26").compareTo(compteActual.getValeur())==0);
     	assertEquals("Solde débiteur", compteActual.getLibelle());
-    	
     }
     /*
     RG_Compta_1 : solde exact et créditeur 
@@ -66,11 +65,9 @@ public class ComptabiliteManagerImplTest {
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithLigneEcriture_returnCompteCrediteur() {
     	CompteComptable compte = new CompteComptable(706, "Prestations de services");
-    	
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertTrue(new BigDecimal("-7250").compareTo(compteActual.getValeur())==0);
     	assertEquals("Solde créditeur", compteActual.getLibelle());
-    	
     }
     
     /*
@@ -79,14 +76,15 @@ public class ComptabiliteManagerImplTest {
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithNoLigneEcriture_returnSoldeNul() {
     	CompteComptable compte = new CompteComptable(805, "Compte fictif");
-    	
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertEquals(BigDecimal.ZERO, compteActual.getValeur());
     	assertEquals("Solde nul",compteActual.getLibelle());
     }
     
-// ==================== AddReference ====================
-    //RG_Compta_5 : teste l'ajout de la référence quand c'est le 1er enregistrement de l'annee concernée
+    // ==================== AddReference ====================
+    /*
+     * teste l'ajout de la référence quand c'est le 1er enregistrement pour l'annee concernée*/
+
     @Test
     public synchronized void addReferenceTest_whenNoSequenceExistsYet() {
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1), 
@@ -99,7 +97,8 @@ public class ComptabiliteManagerImplTest {
         assertEquals("AC-2019/00001", vEcritureComptable.getReference());
     }
     
-    //RG_Compta_5 : teste l'ajout de la référence quand il existe déjà des enregistrements pour l'année concernée
+    /*
+     * teste l'ajout de la référence quand il y a déja des enregistrements pour l'annee concernée*/
     @Test
     public synchronized void addReferenceTest_whenLastSequenceExists() {
     	Calendar calendar = Calendar.getInstance();
@@ -116,7 +115,7 @@ public class ComptabiliteManagerImplTest {
     } 
 
 // ==================== Test de la méthode checkEcritureComptableUnit ====================
-    //Vérifie que les champs de l'écriture comptable respectent les contraintes unitaires (annotations)
+    /*chek pour vérifier que les champs de l'écriture comptable respectent les contraintes unitaires (annotations)*/
     @Test
     public void checkEcritureComptableUnit_contraintes_respectees() throws Exception {
         vEcritureComptable.setReference("AC-2019/00001");
@@ -129,13 +128,7 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
-    //Vérifie qu'une exception est levée quand les contraintes unitaires en sont pas respectées.
-    @Test
-    public void checkEcritureComptableUnitViolation_contraintes_non_respectees() throws Exception {
-    	expectedEx.expect(FunctionalException.class);
-        expectedEx.expectMessage("L'écriture comptable ne respecte pas les règles de gestion.");
-        manager.checkEcritureComptableUnit(vEcritureComptable);
-    }
+
     
     //RG_Compta_4 : Vérifie que le montant des lignes d'écriture sont signés et peuvent être négatifs
     @Test

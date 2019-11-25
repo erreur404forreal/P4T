@@ -123,10 +123,12 @@ public class ComptaDaoImplIntegTest {
 		EcritureComptable ecriture = comptabiliteDao.getEcritureComptableByRef("VE-2016/00002");
 		assertEquals("TMA Appli Xxx", ecriture.getLibelle());
 	}
+	
 	@Test(expected = NotFoundException.class)
 	public void getEcritureComptableByRefTest_NonExistantRef() throws NotFoundException {
 		EcritureComptable ecriture = comptabiliteDao.getEcritureComptableByRef("VE-201/00005");
 	}
+	
 	@Test
 	public void loadListLigneEcritureTest_GivenNonExistantEcritureComptableId()  {
         EcritureComptable ecritureTest = new EcritureComptable();
@@ -136,6 +138,7 @@ public class ComptaDaoImplIntegTest {
         comptabiliteDao.loadListLigneEcriture(ecritureTest);
         assertEquals(0,ecritureTest.getListLigneEcriture().size());
 	}
+	
 	@Test
 	public void loadListLigneEcritureTest_GivenExistingEcritureComptId_NbLigneEcritureOK() {
         EcritureComptable ecritureTest = new EcritureComptable();
