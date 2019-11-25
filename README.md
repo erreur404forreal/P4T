@@ -1,4 +1,5 @@
 # MyERP
+[![Build Status](https://travis-ci.com/erreur404forreal/P4T.svg?branch=master)](https://travis-ci.com/erreur404forreal/P4T)
 
 ## Organisation du répertoire
 
