@@ -18,7 +18,7 @@ public class SequenceEcritureComptableTest {
 	public void toStringTestNull() {
 		SequenceEcritureComptable seq = null;
 	           
-		assertEquals(null,seq.toString());
+		Assert.fail();
 	}
 
 	}

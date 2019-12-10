@@ -18,7 +18,7 @@ public class SoldeEcritureComptableTest {
 	public void toStringTestNull() {
 		SoldeCompteComptable sol = null;
 	           
-		assertEquals(null,sol.toString());
+		Assert.fail();
 	}
 
 	}

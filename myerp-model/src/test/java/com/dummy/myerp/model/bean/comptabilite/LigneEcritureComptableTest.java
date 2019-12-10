@@ -18,7 +18,7 @@ public class LigneEcritureComptableTest {
 	public void toStringTestNull() {
 		LigneEcritureComptable ligne = null;
 	           
-		assertEquals(null,ligne.toString());
+		Assert.fail();
 	}
 
 	}
