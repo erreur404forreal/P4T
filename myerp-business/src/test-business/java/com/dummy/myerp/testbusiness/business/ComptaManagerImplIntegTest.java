@@ -33,6 +33,7 @@ public class ComptaManagerImplIntegTest extends BusinessTestCase {
 	
     private EcritureComptable vEcritureComptable;
     
+    
     @Before
     public void initializeEcritureComptable() {
     	vEcritureComptable = new EcritureComptable();

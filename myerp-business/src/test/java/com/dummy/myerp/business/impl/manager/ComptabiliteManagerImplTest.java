@@ -128,7 +128,13 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
-
+    //Vérifie qu'une exception est levée quand les contraintes unitaires en sont pas respectées.
+    @Test
+    public void checkEcritureComptableUnitViolation_contraintes_non_respectees() throws Exception {
+    	expectedEx.expect(FunctionalException.class);
+        expectedEx.expectMessage("L'écriture comptable ne respecte pas les règles de gestion.");
+        manager.checkEcritureComptableUnit(vEcritureComptable);
+    }
     
     //RG_Compta_4 : Vérifie que le montant des lignes d'écriture sont signés et peuvent être négatifs
     @Test
