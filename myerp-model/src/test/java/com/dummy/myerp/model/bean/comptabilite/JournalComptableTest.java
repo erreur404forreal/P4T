@@ -46,19 +46,19 @@ public class JournalComptableTest {
 	
 	@Test
 	public void toStringTestNull() {
-		LigneEcritureComptable ligne = null;
+		LigneEcritureComptable ligne = "test";
 	           
 		Assert.fail();
 	}
 	@Test
-	public void toStringTestNull() {
-		SequenceEcritureComptable seq = null;
+	public void toStringTestNull1() {
+		SequenceEcritureComptable seq = "testing";
 	           
 		Assert.fail();
 	}
 	@Test
-	public void toStringTestNull() {
-		SoldeCompteComptable sol = null;
+	public void toStringTestNull2() {
+		SoldeCompteComptable sol = "a test";
 	           
 		Assert.fail();
 	}
