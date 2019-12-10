@@ -43,4 +43,23 @@ public class JournalComptableTest {
 		assertEquals("JournalComptable{code='AC', libelle='Achat'}",journal.toString());
 	}
 	
+	
+	@Test
+	public void toStringTestNull() {
+		LigneEcritureComptable ligne = null;
+	           
+		Assert.fail();
+	}
+	@Test
+	public void toStringTestNull() {
+		SequenceEcritureComptable seq = null;
+	           
+		Assert.fail();
+	}
+	@Test
+	public void toStringTestNull() {
+		SoldeCompteComptable sol = null;
+	           
+		Assert.fail();
+	}
 }
