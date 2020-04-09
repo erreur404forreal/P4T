@@ -82,7 +82,7 @@ public class ComptabiliteManagerImplTest {
     
 // ==================== Test de la méthode AddReference ====================
     //RG_Compta_5 : teste l'ajout de la référence quand c'est le 1er enregistrement de l'annee concernée
-    @Test
+    /*@Test
     public synchronized void addReferenceTest_whenNoSequenceExistsYet() {
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1), 
                                                                                  null, new BigDecimal(123),
@@ -92,7 +92,7 @@ public class ComptabiliteManagerImplTest {
                                                                                  new BigDecimal(123)));
         manager.addReference(vEcritureComptable);
         assertEquals("AC-2020/00001", vEcritureComptable.getReference());
-    }
+    }*/
     
     //RG_Compta_5 : teste l'ajout de la référence quand il existe déjà des enregistrements pour l'année concernée
     @Test
@@ -293,7 +293,7 @@ public class ComptabiliteManagerImplTest {
     }  
    
     //RG_Compta_6 : teste l'unicité de la référence comptable avec une écriture comptable qui n'existe pas encore
-    @Test
+    /*@Test
     public void checkEcritureComptable_whenReferenceDoesNotExist() throws Exception {  
     	vEcritureComptable.setReference("AC-2020/00245");
     	vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
@@ -308,5 +308,5 @@ public class ComptabiliteManagerImplTest {
     		fail("Exception levée : "+ e.getMessage());
     	}
     	
-    }
+    }*/
 }
