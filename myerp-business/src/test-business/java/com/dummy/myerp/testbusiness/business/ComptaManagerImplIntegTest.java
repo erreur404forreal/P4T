@@ -151,7 +151,7 @@ public class ComptaManagerImplIntegTest extends BusinessTestCase {
         vEcritureComptable.setReference("AC-2020/00250");
         manager.insertEcritureComptable(vEcritureComptable);
         List<EcritureComptable> ecritures = manager.getListEcritureComptable();
-        EcritureComptable ecriture = EcritureComptable.getInListByReference(ecritures, "AC-2019/00250");
+        EcritureComptable ecriture = EcritureComptable.getInListByReference(ecritures, "AC-2020/00250");
         
         assertEquals("Fauteuil de bureau", ecriture.getLibelle());
     }
