@@ -90,7 +90,7 @@ public class ComptaManagerImplIntegTest extends BusinessTestCase {
 		vEcritureComptable.setDate(new Date());
 	    manager.addReference(vEcritureComptable);
 	    
-	    assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+	    assertEquals("AC-2020/00001", vEcritureComptable.getReference());
 	}
     
     //RG_Compta_5 : teste l'ajout de la référence quand il existe déjà des enregistrements pour l'année concernée
@@ -134,7 +134,7 @@ public class ComptaManagerImplIntegTest extends BusinessTestCase {
     @Test
     public void checkEcritureComptable_whenReferenceDoesNotExist() throws Exception {  
     	vEcritureComptable.setDate(new Date());
-    	vEcritureComptable.setReference("AC-2019/00245");
+    	vEcritureComptable.setReference("AC-2020/00245");
     	try {
     		manager.checkEcritureComptable(vEcritureComptable);
     	} catch (Exception e) {
