@@ -43,12 +43,10 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setDate(new Date());
     }
     
-// ====================  getSoldeCompteComptable ====================
+// ==================== Test de la méthode getSoldeCompteComptable ====================
     
-    /*
-     RG_Compta_1 : solde exact et débiteur 
-     quand plusieurs lignes d'écriture existent pour ce compte*/
- 
+    // RG_Compta_1 : teste que la solde calculé soit exact et que le solde soit bien débiteur 
+    // dans le cas où plusieurs lignes d'écriture existent pour ce compte 
     
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithLigneEcriture_returnCompteDebiteur() {
@@ -57,34 +55,33 @@ public class ComptabiliteManagerImplTest {
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertTrue(new BigDecimal("2947.26").compareTo(compteActual.getValeur())==0);
     	assertEquals("Solde débiteur", compteActual.getLibelle());
+    	
     }
-    /*
-    RG_Compta_1 : solde exact et créditeur 
-    quand plusieurs lignes d'écriture existent pour ce compte*/
+    // RG_Compta_1 : teste que la solde calculé soit exact et que le solde soit bien créditeur 
+    // dans le cas où plusieurs lignes d'écriture existent pour ce compte 
     
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithLigneEcriture_returnCompteCrediteur() {
     	CompteComptable compte = new CompteComptable(706, "Prestations de services");
+    	
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertTrue(new BigDecimal("-7250").compareTo(compteActual.getValeur())==0);
     	assertEquals("Solde créditeur", compteActual.getLibelle());
+    	
     }
     
-    /*
-     RG_Compta_1 : solde est nul quand aucune ligne associée au compteComptable */
- 
+    // RG_Compta_1 : teste que la solde est nul dans le cas où aucune ligne associée au compteComptable
     @Test
     public void getSoldeCompteComptableTest_whenCompteWithNoLigneEcriture_returnSoldeNul() {
     	CompteComptable compte = new CompteComptable(805, "Compte fictif");
+    	
     	SoldeCompteComptable compteActual = manager.getSoldeCompteComptable(compte.getNumero());
     	assertEquals(BigDecimal.ZERO, compteActual.getValeur());
     	assertEquals("Solde nul",compteActual.getLibelle());
     }
     
-    // ==================== AddReference ====================
-    /*
-     * teste l'ajout de la référence quand c'est le 1er enregistrement pour l'annee concernée*/
-
+// ==================== Test de la méthode AddReference ====================
+    //RG_Compta_5 : teste l'ajout de la référence quand c'est le 1er enregistrement de l'annee concernée
     @Test
     public synchronized void addReferenceTest_whenNoSequenceExistsYet() {
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1), 
@@ -94,11 +91,10 @@ public class ComptabiliteManagerImplTest {
                                                                                  null, null,
                                                                                  new BigDecimal(123)));
         manager.addReference(vEcritureComptable);
-        assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+        assertEquals("AC-2020/00001", vEcritureComptable.getReference());
     }
     
-    /*
-     * teste l'ajout de la référence quand il y a déja des enregistrements pour l'annee concernée*/
+    //RG_Compta_5 : teste l'ajout de la référence quand il existe déjà des enregistrements pour l'année concernée
     @Test
     public synchronized void addReferenceTest_whenLastSequenceExists() {
     	Calendar calendar = Calendar.getInstance();
@@ -115,10 +111,10 @@ public class ComptabiliteManagerImplTest {
     } 
 
 // ==================== Test de la méthode checkEcritureComptableUnit ====================
-    /*chek pour vérifier que les champs de l'écriture comptable respectent les contraintes unitaires (annotations)*/
+    //Vérifie que les champs de l'écriture comptable respectent les contraintes unitaires (annotations)
     @Test
     public void checkEcritureComptableUnit_contraintes_respectees() throws Exception {
-        vEcritureComptable.setReference("AC-2019/00001");
+        vEcritureComptable.setReference("AC-2020/00001");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal(123),
                                                                                  null));
@@ -139,7 +135,7 @@ public class ComptabiliteManagerImplTest {
     //RG_Compta_4 : Vérifie que le montant des lignes d'écriture sont signés et peuvent être négatifs
     @Test
     public void checkEcritureComptableUnit_montant_ligne_signes() throws Exception {
-        vEcritureComptable.setReference("AC-2019/00001");
+        vEcritureComptable.setReference("AC-2020/00001");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal("-123"),
                                                                                  null));
@@ -246,7 +242,7 @@ public class ComptabiliteManagerImplTest {
     public void checkEcritureComptableUnitRG5_wrongJournalCode() throws Exception {
     	expectedEx.expect(FunctionalException.class);
     	expectedEx.expectMessage("Le code journal de la référence ne correspond pas au journal de l'écriture");
-        vEcritureComptable.setReference("VE-2019/00001");
+        vEcritureComptable.setReference("VE-2020/00001");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                     null, new BigDecimal(123),
                     null));
@@ -299,7 +295,7 @@ public class ComptabiliteManagerImplTest {
     //RG_Compta_6 : teste l'unicité de la référence comptable avec une écriture comptable qui n'existe pas encore
     @Test
     public void checkEcritureComptable_whenReferenceDoesNotExist() throws Exception {  
-    	vEcritureComptable.setReference("AC-2019/00245");
+    	vEcritureComptable.setReference("AC-2020/00245");
     	vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                null, new BigDecimal(123),
                null));
