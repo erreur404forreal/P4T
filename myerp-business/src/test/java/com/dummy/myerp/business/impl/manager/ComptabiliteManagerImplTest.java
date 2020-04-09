@@ -91,7 +91,7 @@ public class ComptabiliteManagerImplTest {
                                                                                  null, null,
                                                                                  new BigDecimal(123)));
         manager.addReference(vEcritureComptable);
-        assertEquals("AC-2019/00001", vEcritureComptable.getReference());
+        assertEquals("AC-2020/00001", vEcritureComptable.getReference());
     }
     
     //RG_Compta_5 : teste l'ajout de la référence quand il existe déjà des enregistrements pour l'année concernée
@@ -295,7 +295,7 @@ public class ComptabiliteManagerImplTest {
     //RG_Compta_6 : teste l'unicité de la référence comptable avec une écriture comptable qui n'existe pas encore
     @Test
     public void checkEcritureComptable_whenReferenceDoesNotExist() throws Exception {  
-    	vEcritureComptable.setReference("AC-2019/00245");
+    	vEcritureComptable.setReference("AC-2020/00245");
     	vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                null, new BigDecimal(123),
                null));
