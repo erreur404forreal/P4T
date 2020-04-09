@@ -1,6 +1,8 @@
 # MyERP
 [![Build Status](https://travis-ci.com/erreur404forreal/P4T.svg?branch=master)](https://travis-ci.com/erreur404forreal/P4T)
 
+[![Coverage Status](https://coveralls.io/repos/github/erreur404forreal/P4T/badge.svg?branch=master)](https://coveralls.io/github/erreur404forreal/P4T?branch=master)
+
 ## Organisation du répertoire
 
 *   `doc` : documentation
