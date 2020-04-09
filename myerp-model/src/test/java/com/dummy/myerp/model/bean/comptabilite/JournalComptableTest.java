@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,4 +44,25 @@ public class JournalComptableTest {
 		assertEquals("JournalComptable{code='AC', libelle='Achat'}",journal.toString());
 	}
 	
+	
+	@Test
+	public void toStringTestNull() {
+		LigneEcritureComptable ligne =  new LigneEcritureComptable(new CompteComptable(1),
+	                                                                                null, new BigDecimal(123),
+	                                                                                null);
+	           
+		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",ligne.toString());
+	}
+	@Test
+	public void toStringTestNull1() {
+		SequenceEcritureComptable seq = null;
+	           
+		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",Seq.toString());
+	}
+	@Test
+	public void toStringTestNull2() {
+		SoldeCompteComptable sol = new SoldeCompteComptable;
+	           
+		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",sol.toString());
+	}
 }
