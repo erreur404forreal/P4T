@@ -1,6 +1,7 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
@@ -44,25 +45,16 @@ public class JournalComptableTest {
 		assertEquals("JournalComptable{code='AC', libelle='Achat'}",journal.toString());
 	}
 	
-	
-//	@Test
-//	public void toStringTestNull() {
-//		LigneEcritureComptable ligne =  new LigneEcritureComptable(new CompteComptable(1),
-//	                                                                                null, new BigDecimal(123),
-//	                                                                                null);
-//	           
-//		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",ligne.toString());
-//	}
-//	@Test
-//	public void toStringTestNull1() {
-//		SequenceEcritureComptable seq = null;
-//	           
-//		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",Seq.toString());
-//	}
-//	@Test
-//	public void toStringTestNull2() {
-//		SoldeCompteComptable sol = new SoldeCompteComptable();
-//	           
-//		AssertNotEquals("JournalComptable{code='AC', libelle='Achat'}",sol.toString());
-//	}
+	@Test
+	public void getSet() {
+		List<JournalComptable> journauxComptables = new ArrayList<JournalComptable>();
+		JournalComptable journal = new JournalComptable("AC","Achat");
+		journauxComptables.add(journal);
+		journal.getCode();
+		journal.setCode(null);
+		journal.getLibelle();
+		journal.setLibelle(null);
+		journal.getListSequenceEcritureComptable();
+		
+	}
 }

@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LigneEcritureComptableTest {
 
@@ -43,5 +45,16 @@ public class LigneEcritureComptableTest {
         Assert.assertEquals(ligneEcritureComptable.getDebit(), new BigDecimal(1));
         Assert.assertEquals(ligneEcritureComptable.getCredit(), new BigDecimal(2));
     }
+    
+    
+	@Test
+	public void getSet() {
+        compteComptable.getNumero();
+        compteComptable.getLibelle();
+        ligneEcritureComptable.getCredit();
+        ligneEcritureComptable.getDebit();
+        ligneEcritureComptable.getLibelle();
+		
+	}
 
 }
