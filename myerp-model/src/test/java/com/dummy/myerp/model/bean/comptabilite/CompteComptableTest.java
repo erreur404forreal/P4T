@@ -49,10 +49,12 @@ public class CompteComptableTest {
 	@Test
 	public void getSet() {
 		CompteComptable compteExpected = new CompteComptable(706, "Prestations de services");
+		CompteComptable compteExpected2 = new CompteComptable(504, "libelle");
 		compteExpected.setNumero(504);
 		compteExpected.setLibelle("libelle");
-		assertTrue(compteExpected.getNumero()==(Integer)504);
-		assertTrue(compteExpected.getLibelle()=="libelle");
+		assertSame(compteExpected.getLibelle(),compteExpected2.getLibelle());
+		assertNull(compteExpected.getNumero());
+
 
 		
 	}
