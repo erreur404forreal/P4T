@@ -3,9 +3,12 @@ package com.dummy.myerp.model.bean.comptabilite;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.constraints.AssertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +44,17 @@ public class CompteComptableTest {
 	public void toStringTest() {
 		CompteComptable compte = new CompteComptable(706, "Prestations de services");
 		assertEquals("CompteComptable{numero=706, libelle='Prestations de services'}",compte.toString());
+	}
+	
+	@Test
+	public void getSet() {
+		CompteComptable compteExpected = new CompteComptable(706, "Prestations de services");
+		compteExpected.setNumero(504);
+		compteExpected.setLibelle("libelle");
+		assertTrue(compteExpected.getNumero()==(Integer)504);
+		assertTrue(compteExpected.getLibelle()=="libelle");
+
+		
 	}
 	
 	
