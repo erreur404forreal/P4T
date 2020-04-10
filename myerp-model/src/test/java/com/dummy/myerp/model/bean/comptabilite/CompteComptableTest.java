@@ -55,9 +55,6 @@ public class CompteComptableTest {
 		compteExpected.setLibelle("libelle");
 		assertSame(compteExpected.getLibelle(),compteExpected2.getLibelle());
 		assertNotNull(compteExpected.getNumero());
-
-
-		
 	}
 	
 	

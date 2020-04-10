@@ -1,6 +1,7 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -97,10 +98,16 @@ public class EcritureComptableTest {
     	vEcritureComptable2.setJournal(new JournalComptable("VE", "Vente"));
 	    vEcritureComptable2.setLibelle("Libelle");
         vEcritureComptable2.setReference("VE-2016/00002");
+        
+    	vEcritureComptable2.getJournal();
+	    vEcritureComptable2.getLibelle();
+        vEcritureComptable2.getReference();
+        vEcritureComptable1.getDate();
+        
         ecritures.add(vEcritureComptable2);
         
         EcritureComptable ecritureActual = EcritureComptable.getInListByReference(ecritures, "VE-2016/00002");
         assertEquals(vEcritureComptable2.toString(), ecritureActual.toString()); 
     }   
- 
+
 }
