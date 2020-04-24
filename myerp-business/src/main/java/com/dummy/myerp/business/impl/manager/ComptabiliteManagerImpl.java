@@ -41,6 +41,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     public ComptabiliteManagerImpl() {
     }
+    
+    
+    
 
 
     // ==================== Getters/Setters ====================
